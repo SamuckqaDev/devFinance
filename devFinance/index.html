@@ -11,22 +11,22 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dev.finance$</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
   <body>
     <div id="root">
       <header>
-        <img src="./assets/logo.svg" alt="logo Dev Finace" />
+        <img src="./assets/img/logo.svg" alt="logo Dev Finace" />
       </header>
 
       <main class="container">
         <section id="balance">
-          <h2 class="sl-only">Balance</h2>
+          <h2 class="sr-only">Balance</h2>
 
           <div class="card">
             <h3>
               <span>Incomes</span>
-              <img src="./assets/income.svg" alt="Income image" />
+              <img src="./assets/img/income.svg" alt="Income image" />
             </h3>
             <p>R$ 5.000,00</p>
           </div>
@@ -34,7 +34,7 @@
           <div class="card">
             <h3>
               <span>Outcomes</span>
-              <img src="./assets/outcome.svg" alt="Outcome image" />
+              <img src="./assets/img/outcome.svg" alt="Outcome image" />
             </h3>
             <p>R$ 2.000,00</p>
           </div>
@@ -42,15 +42,18 @@
           <div class="card total">
             <h3>
               <span>Total</span>
-              <img src="./assets/total.svg" alt="Total image" />
+              <img src="./assets/img/total.svg" alt="Total image" />
             </h3>
             <p>R$ 5.000,00</p>
           </div>
         </section>
 
         <section id="transaction">
-          <h2 class="sl-only">Transactions</h2>
-          <a href="#" class="button new"> + New Transaction </a>
+          <h2 class="sr-only">Transactions</h2>
+          <a href="#" 
+          onclick="modal.open()"
+          class="button new">
+           + New Transaction </a>
           <table id="data-table">
             <thead>
               <tr>
@@ -66,7 +69,7 @@
                 <td class="outcome">- R$ 500,00</td>
                 <td class="date">27/10/2021</td>
                 <td>
-                  <img src="./assets/minus.svg" alt="Remove transaction" />
+                  <img src="./assets/img/minus.svg"alt="Remove transaction" />
                 </td>
               </tr>
               <tr>
@@ -74,7 +77,7 @@
                 <td class="income">R$ 5000,00</td>
                 <td class="date">23/10/2021</td>
                 <td>
-                  <img src="./assets/minus.svg" alt="Remove transaction" />
+                  <img src="./assets/img/minus.svg"alt="Remove transaction" />
                 </td>
               </tr>
               <tr>
@@ -82,41 +85,62 @@
                 <td class="income">R$ 170,00</td>
                 <td class="date">23/10/2021</td>
                 <td>
-                  <img src="./assets/minus.svg" alt="Remove transaction" />
+                  <img src="./assets/img/minus.svg" alt="Remove transaction" />
                 </td>
               </tr>
             </tbody>
           </table>
         </section>
       </main>
-      <div class="modal-overlay active">
+      <div class="modal-overlay">
         <div class="modal">
-          <div class="form">
+          <div id="form">
             <h2>New transaction</h2>
-            <form action="description">
+            <form >
               <div class="input-group">
-                <label class="sr-only" for="ipt_description">Description:</label>
+                <label class="sr-only" for="ipt_description">Descriptio:</label>
                 <input
                   type="text"
                   name="description"
                   id="ipt_description"
                   placeholder="Description"
                 />
-                <label class="sr-only" for="ipt_amount">Value:</label>
+                <label class="sr-only" for="ipt_amount">Value</label>
                 <input
                   type="number"
+                  step="0.01"
                   name="amount"
                   id="ipt_amount"
-                  placeholder="Amount"
+                  placeholder="0,00"
                 />
+                <small class="help">
+                  Warning: use the sign "-" (negative) for invoices and ","
+                  (comma) for decimal values
+                </small>
+              </div>
+        
+              <div class="input-group">
+                <label class="sr-only" for="ipt_date">Date</label>
+                <input
+                  type="date"
+                  step="0.01"
+                  name="date"
+                  id="ipt_date"
+                />
+              </div>
+              <div class="input-group actions">
+                <a href="#" onclick="modal.close()" class="button cancel">Cancel</a>
+                <button>Salvar</button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <footer>
-        <p>dev.finance$</p>
-      </footer>
+    
     </div>
+    <footer>
+      <p>dev.finance$</p>
+    </footer>
+    <script src="assets/js/modal.js"></script>
   </body>
 </html>
