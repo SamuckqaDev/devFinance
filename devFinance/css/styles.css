@@ -4,6 +4,8 @@
     --dark-green: #2d4a22;
     --green: #49aa26;
     --light-green: #12a454;
+    --green-title: #3dd705;
+    --musgo: #a9aa26;
     --white: #fff;
     --title: #363f5f;
     --text: #969cb3;
@@ -15,12 +17,28 @@
     margin: 0;
     box-sizing: border-box;
 }
-
+html{
+    font-size: 93.75%;
+}
 body {
     font-family: "Poppins", sans-serif;
     background: var(--background);
 }
 
+/*screen only to readers===========*/
+.sl-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    border: solid 1px red;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+/*Conatianer default============*/
 .container {
     width: min(90vw, 800px);
     margin: auto;
@@ -33,6 +51,22 @@ h2 {
     font-weight: 400;
 }
 /*Header =======================*/
+
+/*Links and buttons=============*/
+a {
+    color: var(--light-green);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    color: var(--green-title);
+}
+
+.button.new {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
 header {
     background: var(--dark-green);
     padding: 2rem 0 10rem;
@@ -67,7 +101,12 @@ header {
 .card h3 {
     font-weight: normal;
     font-size: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
 .card p {
     font-size: 2rem;
     line-height: 3rem;
@@ -78,17 +117,28 @@ header {
     color: var(--white);
 }
 /*Table=======================*/
+#transaction{
+    display: block;
+    overflow: auto;
+    width: 100%;
+}
 #data-table {
     width: 100%;
     border-spacing: 0 0.5rem;
     border-spacing: 0 0.5;
     color: var(--text);
+ 
 }
 table thead tr th:first-child,
 table tbody tr td:first-child {
     border-radius: 0.25rem 0 0 0.25rem;
 }
-table th {
+
+table thead tr th:last-child,
+table tbody tr td:last-child{
+    border-radius: 0 0.25rem 0.25rem 0;  
+}
+table thead th {
     background: var(--white);
     font-weight: normal;
     padding: 1rem 2rem;
@@ -101,7 +151,7 @@ table tbody td {
     font-weight: normal;
 }
 
-table tr {
+table tbody tr {
     opacity: 0.7;
 }
 
@@ -113,17 +163,54 @@ td.description {
     color: var(--title);
 }
 
-td.income{
+td.income {
     color: var(--light-green);
 }
 
-td.outcome{
+td.outcome {
     color: var(--red);
 }
+/*Modal========================*/
+.modal-overlay{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background:rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-overlay.active{
+    opacity: 1;
+    visibility: visible;
+}
+.modal{
+    background: var(--background);
+    padding: 2.4rem;
+    position: relative;
+}
+
 /*footer=======================*/
 footer {
     text-align: center;
     padding: 4rem 0 2rem;
     font-weight: 500;
     opacity: 0.6;
+}
+
+/*Responsive=======================*/
+@media (min-width:800px){
+    html{
+        font-size: 87.5%;
+    }
+
+    #balance{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
 }
