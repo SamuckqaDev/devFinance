@@ -9,7 +9,11 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;0,500;0,700;1,300&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="./assets/img/total.svg" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="./assets/img/total.svg"
+      type="image/x-icon"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dev.finance$</title>
     <link rel="stylesheet" href="./assets/css/styles.css" />
@@ -45,16 +49,15 @@
               <span>Total</span>
               <img src="./assets/img/total.svg" alt="Total image" />
             </h3>
-            <p>R$ 5.000,00</p>
+            <p>R$ 3.000,00</p>
           </div>
         </section>
 
         <section id="transaction">
           <h2 class="sr-only">Transactions</h2>
-          <a href="#" 
-          onclick="modal.open()"
-          class="button new">
-           + New Transaction </a>
+          <a href="#" onclick="Modal.open()" class="button new">
+            + New Transaction
+          </a>
           <table id="data-table">
             <thead>
               <tr>
@@ -70,7 +73,7 @@
                 <td class="outcome">- R$ 500,00</td>
                 <td class="date">27/10/2021</td>
                 <td>
-                  <img src="./assets/img/minus.svg"alt="Remove transaction" />
+                  <img src="./assets/img/minus.svg" alt="Remove transaction" />
                 </td>
               </tr>
               <tr>
@@ -78,7 +81,7 @@
                 <td class="income">R$ 5000,00</td>
                 <td class="date">23/10/2021</td>
                 <td>
-                  <img src="./assets/img/minus.svg"alt="Remove transaction" />
+                  <img src="./assets/img/minus.svg" alt="Remove transaction" />
                 </td>
               </tr>
               <tr>
@@ -97,9 +100,9 @@
         <div class="modal">
           <div id="form">
             <h2>New transaction</h2>
-            <form >
+            <form>
               <div class="input-group">
-                <label class="sr-only" for="ipt_description">Descriptio:</label>
+                <label class="sr-only" for="ipt_description">Description:</label>
                 <input
                   type="text"
                   name="description"
@@ -119,29 +122,25 @@
                   (comma) for decimal values
                 </small>
               </div>
-        
+
               <div class="input-group">
                 <label class="sr-only" for="ipt_date">Date</label>
-                <input
-                  type="date"
-                  step="0.01"
-                  name="date"
-                  id="ipt_date"
-                />
+                <input type="date" step="0.01" name="date" id="ipt_date" />
               </div>
               <div class="input-group actions">
-                <a href="#" onclick="modal.close()" class="button cancel">Cancel</a>
+                <a href="#" onclick="Modal.close()" class="button cancel"
+                  >Cancel</a
+                >
                 <button>Salvar</button>
               </div>
             </form>
           </div>
         </div>
       </div>
-    
     </div>
     <footer>
-      <p>dev.finance$</p>
+      <p><span id="date"></span> - dev.finance$</p>
     </footer>
-    <script src="assets/js/modal.js"></script>
+    <script src="assets/js/scripts.js"></script>
   </body>
 </html>
