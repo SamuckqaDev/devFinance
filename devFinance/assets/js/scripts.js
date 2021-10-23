@@ -1,5 +1,4 @@
 //Open and close modal;
-
 const Modal = {
   open() {
     //Open modal;
@@ -13,33 +12,37 @@ const Modal = {
   },
 };
 
-//objects Table transactions;
+//arry of objects Table transactions;
 const transactions = [
   {
-    id: 1,
     description: "Site Development",
     amount: 500000,
     createAt: "23/01/2021",
   },
   {
-    id: 2,
     description: "RocketSeat",
     amount: -21800,
     createAt: "23/01/2021",
   },
   {
-    id: 3,
     description: "driver's license",
     amount: -150000,
     createAt: "23/01/2021",
   },
- 
 ];
 
+//Object Transaction;
 const Transaction = {
   all: transactions,
-  add(transaction){
-    Transaction.all.push(transaction)
+  add(transaction) {
+    Transaction.all.push(transaction);
+
+    App.reload();
+  },
+  remove(index) {
+    Transaction.all.splice(index, 1);
+
+    App.reload();
   },
   incomes() {
     let income = 0;
@@ -80,6 +83,7 @@ const Transaction = {
   },
 };
 
+//Object DOM to render HTML;
 const DOM = {
   transactionsContainer: document.querySelector("#data-table tbody"),
   addTransaction(transaction, index) {
@@ -119,8 +123,12 @@ const DOM = {
       Transaction.total()
     );
   },
+  clearTransaction() {
+    DOM.transactionsContainer.innerHTML = "";
+  },
 };
 
+//Object UTILS to store functions and corrections of code;
 const Utils = {
   //Format type amount;
   formatCurrency(value) {
@@ -141,26 +149,72 @@ const Utils = {
   },
 };
 
+const Form = {
+  description: document.querySelector("input#ipt_description"),
+  amount: document.querySelector("input#ipt_amount"),
+  date: document.querySelector("input#ipt_date"),
+
+  getValues() {
+    return {
+      description: Form.description.value,
+      amount: Form.amount.value,
+      date: Form.date.value,
+    };
+  },
+
+  formatData() {
+    console.log("format Datas ");
+  },
+  validateFields() {
+    const { description, amount, date } = Form.getValues();
+    if (description.trim() === "" || amount.trim() === "" || date.trim()) {
+      throw new Error("Please, check all fileds ...");
+    }
+  },
+  submit(event) {
+    //Interrupt default behavior;
+    event.preventDefault();
+
+    try {
+      //check if all fileds are filled;
+      Form.validateFields();
+    } catch (error) {
+      alert(error.message)
+    }
+
+    //Format datas to save;
+    Form.formatData();
+
+    //save;
+
+    //after save delete datas of  form and close modal;
+    //update app;
+  },
+};
+
+//Objectp APP to Inizialize and reload app while running;
 const App = {
-  init(){
+  //Initialize appliction;
+  init() {
+    //Add all transactions in HTML;
     Transaction.all.forEach((transaction) => {
       DOM.addTransaction(transaction);
-    })
-    
-  }, 
-  reload(){
+    });
+    //Update card values;
+    DOM.updateBalance();
+  },
+  reload() {
+    //reload after add transactions;
+    //clear DOM object to render new trasaction;
+    DOM.clearTransaction();
+    App.init();
+  },
+};
 
-  }
-}
-
-
-DOM.updateBalance();
-
-App.init()
-
+//App(Object) always goes last;
+App.init();
 
 //Set the current year;
 const year = document.getElementById("date");
 const newDate = new Date();
 year.innerHTML = newDate.getFullYear();
-
