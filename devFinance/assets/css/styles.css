@@ -149,6 +149,10 @@ header {
     color: var(--white);
 }
 
+.warning{
+    background: var(--red);
+}
+
 /*Table=======================*/
 #transaction {
     display: block;

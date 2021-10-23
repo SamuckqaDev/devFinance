@@ -18,7 +18,7 @@ const transactions = [
   {
     id: 1,
     description: "Site Development",
-    amount: 300000,
+    amount: 500000,
     createAt: "23/01/2021",
   },
   {
@@ -33,24 +33,50 @@ const transactions = [
     amount: -150000,
     createAt: "23/01/2021",
   },
-  {
-    id: 4,
-    description: "App",
-    amount: 180000,
-    createAt: "23/01/2021",
-  },
+ 
 ];
 
 const Transaction = {
+  all: transactions,
+  add(transaction){
+    Transaction.all.push(transaction)
+  },
   incomes() {
+    let income = 0;
     //Sum incomes;
+
+    //get all transactions;
+    Transaction.all.forEach((transaction) => {
+      // if > 0 ;
+      //verify if transaction > 0;
+      if (transaction.amount > 0) {
+        income += transaction.amount;
+      }
+    });
+
+    // sum an variable and return;
+    return income;
   },
   outcomes() {
-    false;
     //Sum outcomes;
+    let outcome = 0;
+    //Sum incomes;
+
+    //get all transactions;
+    Transaction.all.forEach((transaction) => {
+      // if < 0 ;
+      //verify if transaction < 0;
+      if (transaction.amount < 0) {
+        outcome += transaction.amount;
+      }
+    });
+    // sum an variable and return;
+    return outcome;
   },
   total() {
-    //Total = incoems - outcomes;
+    //Total = incomes - outcomes;
+    let total = Transaction.incomes() + Transaction.outcomes();
+    return total;
   },
 };
 
@@ -58,7 +84,7 @@ const DOM = {
   transactionsContainer: document.querySelector("#data-table tbody"),
   addTransaction(transaction, index) {
     console.log(transaction);
-    //create Element through DOM;
+    //Create Element through DOM;
     const tr = document.createElement("tr");
     tr.innerHTML = DOM.innerHTMLTransaction(transaction);
     DOM.transactionsContainer.appendChild(tr);
@@ -68,7 +94,7 @@ const DOM = {
 
     const amount = Utils.formatCurrency(transaction.amount);
 
-    //Create elemnent and list infomation trough variables;
+    //Create element and list information trough variables;
     const html = `  
       <td class="description">${transaction.description}</td>
       <td class="${CSSclass}">R$ ${amount}</td>
@@ -79,6 +105,19 @@ const DOM = {
    `;
 
     return html;
+  },
+  updateBalance() {
+    document.getElementById("incomeDisplay").innerHTML = Utils.formatCurrency(
+      Transaction.incomes()
+    );
+
+    document.getElementById("outcomeDisplay").innerHTML = Utils.formatCurrency(
+      Transaction.outcomes()
+    );
+
+    document.getElementById("totalDisplay").innerHTML = Utils.formatCurrency(
+      Transaction.total()
+    );
   },
 };
 
@@ -102,12 +141,26 @@ const Utils = {
   },
 };
 
+const App = {
+  init(){
+    Transaction.all.forEach((transaction) => {
+      DOM.addTransaction(transaction);
+    })
+    
+  }, 
+  reload(){
+
+  }
+}
+
+
+DOM.updateBalance();
+
+App.init()
+
+
 //Set the current year;
 const year = document.getElementById("date");
 const newDate = new Date();
 year.innerHTML = newDate.getFullYear();
 
-//List transactions;
-transactions.forEach((transaction) => {
-  DOM.addTransaction(transaction);
-});
