@@ -29,6 +29,16 @@ const transactions = [
     amount: -150000,
     createAt: "23/01/2021",
   },
+  {
+    description: "Site Development",
+    amount: 500000,
+    createAt: "23/01/2021",
+  },
+  {
+    description: "Pizza",
+    amount: 6100,
+    createAt: "23/01/2021",
+  },
 ];
 
 //Object Transaction;
@@ -40,7 +50,7 @@ const Transaction = {
     App.reload();
   },
   remove(index) {
-    Transaction.all.splice(index, 1);
+    Transaction.all.splice(index);
 
     App.reload();
   },
@@ -101,7 +111,7 @@ const DOM = {
     //Create element and list information trough variables;
     const html = `  
       <td class="description">${transaction.description}</td>
-      <td class="${CSSclass}">R$ ${amount}</td>
+      <td class="${CSSclass}">${amount}</td>
       <td class="date">${transaction.createAt}</td>
       <td>
        <img src="./assets/img/minus.svg" alt="Remove transaction" />
@@ -131,6 +141,16 @@ const DOM = {
 //Object UTILS to store functions and corrections of code;
 const Utils = {
   //Format type amount;
+  formatDate(createAt) {
+    const splitedDate = createAt.split("-");
+    console.log(splitedDate);
+
+    return `${splitedDate[2]}/${splitedDate[1]}/${splitedDate[0]}`;
+  },
+  formatAmount(value) {
+    value = Number(value) * 100;
+    return value;
+  },
   formatCurrency(value) {
     //Add signal according to ammount;
     const signal = Number(value) < 0 ? "-" : "";
@@ -152,24 +172,39 @@ const Utils = {
 const Form = {
   description: document.querySelector("input#ipt_description"),
   amount: document.querySelector("input#ipt_amount"),
-  date: document.querySelector("input#ipt_date"),
+  createAt: document.querySelector("input#ipt_date"),
 
   getValues() {
     return {
       description: Form.description.value,
       amount: Form.amount.value,
-      date: Form.date.value,
+      createAt: Form.createAt.value,
     };
   },
-
   formatData() {
-    console.log("format Datas ");
+    let { description, amount, createAt } = Form.getValues();
+    amount = Utils.formatAmount(amount);
+    createAt = Utils.formatDate(createAt);
+
+    return {
+      description,
+      amount,
+      createAt,
+    };
   },
   validateFields() {
-    const { description, amount, date } = Form.getValues();
-    if (description.trim() === "" || amount.trim() === "" || date.trim()) {
-      throw new Error("Please, check all fileds ...");
+    const { description, amount, createAt } = Form.getValues();
+    if (description.trim() === "" || amount.trim() === "" || createAt.trim() == "") {
+      throw new Error("Please, check all fields ...");
     }
+  },
+  saveTransaction(transaction) {
+    Transaction .add(transaction);
+  },
+  clearFields() {
+    Form.description.value = "";
+    Form.amount.value = "";
+    Form.createAt.value = "";
   },
   submit(event) {
     //Interrupt default behavior;
@@ -178,18 +213,21 @@ const Form = {
     try {
       //check if all fileds are filled;
       Form.validateFields();
+      const transaction = Form.formatData();
+      Form.saveTransaction(transaction);
+
+      // clear fields;
+      Form.clearFields();
+      
+      //Later close modal;
+      Modal.close();
+
     } catch (error) {
       alert(error.message)
     }
+  },    
 
-    //Format datas to save;
-    Form.formatData();
 
-    //save;
-
-    //after save delete datas of  form and close modal;
-    //update app;
-  },
 };
 
 //Objectp APP to Inizialize and reload app while running;
@@ -215,6 +253,6 @@ const App = {
 App.init();
 
 //Set the current year;
-const year = document.getElementById("date");
+const year = document.getElementById("year");
 const newDate = new Date();
 year.innerHTML = newDate.getFullYear();
